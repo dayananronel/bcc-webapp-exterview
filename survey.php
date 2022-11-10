@@ -100,14 +100,14 @@
                                                 for($o = 0; $o < 8; $o++){ ?>
                                                     <section class="col-md-4">
                                                         <label class="c-input"><?=$option[$o];?>
-                                                            <input type="checkbox" >
+                                                            <input type="checkbox" name="checkbox_<?=$o?>" id="checkbox_<?=$o?>" >
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </section>
                                             <?php } ?>
                                             <section class="col-md-12">
                                                 <label class="c-input"><?=$option[8];?> <input placeholder="Please Specify" style="height: 30px !important;width: 400px !important;opacity: 1;border-radius: 0px;margin-left: 10px;" oninput="this.className = ''" name="fname">
-                                                    <input type="checkbox" >
+                                                    <input type="checkbox"  name="checkbox_9" id="checkbox_9" >
                                                     <span class="checkmark"></span>
                                                 </label>
                                                 
@@ -117,7 +117,7 @@
                                     <?php if($r['answer'] != ""){ ?>
                                         <div style="display: grid;">
                                             <label for="">Answer: </label>
-                                            <textarea  oninput="this.className = ''" name="answer-<?=$r['id']?>" id="" cols="78" rows="3"></textarea>
+                                            <textarea  oninput="this.className = ''" name="answer_1" id="answer_1" cols="78" rows="3"></textarea>
                                         </div>
                                     <?php } ?>
                                     <div class="col-md-12" style="display: flex; margin-left: -3%;">
@@ -360,76 +360,28 @@
     </div>
 </body>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script>
+    $("#answer_1")
+        .focusout(function() {
+        console.log($("#answer_1").val())
+    });
+    $('#checkbox_0').click(function() {
+        if ($(this).is(':checked')) {
+            console.log($("#checkbox_0").val())
+        }
+    });
 
+</script>
 <script>
     var currentTab = 0;
-              document.addEventListener("DOMContentLoaded", function(event) {
+    document.addEventListener("DOMContentLoaded", function(event) {
+        showTab(currentTab);
+    });
+    function showTab(n) {
+        var x = document.getElementsByClassName("tab");
+        x[n].style.display = "block";
+    }
 
-
-              showTab(currentTab);
-
-              });
-
-              function showTab(n) {
-              var x = document.getElementsByClassName("tab");
-              x[n].style.display = "block";
-              if (n == 0) {
-              document.getElementById("prevBtn").style.display = "none";
-              } else {
-              document.getElementById("prevBtn").style.display = "inline";
-              }
-              if (n == (x.length - 1)) {
-              document.getElementById("nextBtn").innerHTML = '<i class="fa fa-angle-double-right"></i>';
-              } else {
-              document.getElementById("nextBtn").innerHTML = '<i class="fa fa-angle-double-right"></i>';
-              }
-              fixStepIndicator(n)
-              }
-
-              function nextPrev(n) {
-              var x = document.getElementsByClassName("tab");
-              if (n == 1 && !validateForm()) return false;
-              x[currentTab].style.display = "none";
-              currentTab = currentTab + n;
-              if (currentTab >= x.length) {
-            
-              document.getElementById("nextprevious").style.display = "none";
-              document.getElementById("all-steps").style.display = "none";
-              document.getElementById("register").style.display = "none";
-              document.getElementById("text-message").style.display = "block";
-
-
-
-
-              }
-              showTab(currentTab);
-              }
-
-              function validateForm() {
-                   var x, y, i, valid = true;
-                   x = document.getElementsByClassName("tab");
-                   y = x[currentTab].getElementsByTagName("input");
-                   for (i = 0; i < y.length; i++) {
-                       if (y[i].value == "") {
-                           y[i].className += " invalid";
-                           valid = false;
-                       }
-
-
-                   }
-                   if (valid) {
-                       document.getElementsByClassName("step")[currentTab].className += " finish";
-                   }
-                   return valid;
-               }
-
-               function fixStepIndicator(n) {
-                   var i, x = document.getElementsByClassName("step");
-                   for (i = 0; i < x.length; i++) {
-                       x[i].className = x[i].className.replace(" active", "");
-                   }
-                   x[n].className += " active";
-               }
 </script>
 
 </html>
